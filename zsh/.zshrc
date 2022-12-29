@@ -19,34 +19,23 @@ alias vim='nvim'
 #alias sx='startx'
 alias disablehibernate='sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target'
 alias enablehibernate='sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target'
-# alias ranger="st -e ranger&!"
-#alias rsync="rsync --info=progress2 --recursive"
 alias szsh="source $ZDOTDIR/.zshrc"
-alias tat='tmux new-session -As $(basename "$PWD" | tr . -)' # will attach if session exists, or create a new session
-# alias tmuxsrc="tmux source-file ~/.tmux.conf"
-# alias tmuxkillall="tmux ls | cut -d : -f 1 | xargs -I {} tmux kill-session -t {}" # tmux kill all sessions
-#alias ct="ctags -R --exclude=.git --exclude=node_modules"
-# alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
+#alias tat='tmux new-session -As $(basename "$PWD" | tr . -)' # will attach if session exists, or create a new session
 alias t='date +%H:%M'
 alias x='exit'
 alias q='exit'
-alias battery='acpi | cut -f 2 -d ,'
-# batt=$(acpi); echo ${${batt##*harging, }%, *}
+# battery percentage using regex
+alias battery="acpi | awk '{if(match(\$0,/[0123456789]{1,3}%/,m)) print m[0]}'"
 alias ll='ls -la --group-directories-first --si --time-style=iso --color=always'
 alias l='ls -l --group-directories-first --si --time-style=iso --color=always'
-alias lsc='ls --group-directories-first --si --time-style=iso --color=always'
-#alias xopen='xdg-open'
-#alias clc='xclip -selection c'
-#alias clp='xclip -selection c -o'
 alias calendar='date | cut -f 7 -d \ | xargs cal -mw $1'
 alias cal='cal -mw'
-alias wetter='curl https://wttr.in/munich'
+#alias wetter='curl https://wttr.in/munich'
 alias rs='redshift -l 52.31:13.24 -o'
 
 alias ns='nordvpn status'
-alias nc='nordvpn connect'
+alias nc='nordvpn connect' #todo: this conflicts with netcat
 alias nd='nordvpn disconnect'
-alias cld='cd $OLDPWD'
 # }}}
 
 # Auto Completion {{{
@@ -186,7 +175,8 @@ function virtualenv_info {
 function prompt_char {
   git branch >/dev/null 2>/dev/null && echo '±' && return
   hg root >/dev/null 2>/dev/null && echo '☿' && return
-  echo '○'
+  #echo '○'
+  echo "$"
 }
 
 function box_name {
@@ -269,7 +259,7 @@ function current_pwd {
 # $(prompt_char) '
 
 PROMPT='
-${PR_GREEN}M.%{$reset_color%} ${PR_BOLD_YELLOW}$(current_pwd)%{$reset_color%} $(git_prompt_string)
+${PR_GREEN}$USER@$(hostname):%{$reset_color%}${PR_BOLD_YELLOW}$(current_pwd)%{$reset_color%} $(git_prompt_string)
 $(prompt_char) '
 
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color [(y)es (n)o (a)bort (e)dit]? "
