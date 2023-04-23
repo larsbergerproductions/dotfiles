@@ -182,7 +182,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "web", "main", "3", "4", "5", "6", "7", "music", "mail" }, s, awful.layout.layouts[1])
+    awful.tag({ "1 [web]", "2 [main]", "3 [dev]", "4 [doc]", "5", "6", "7 [workingmemory]", "8 [music]", "9 [mail]" }, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -286,9 +286,16 @@ globalkeys = gears.table.join(
         end,
         {description = "go back", group = "client"}),
 
+    -- screen layout selection using F-Keys
+    awful.key({ modkey, "Shift"   }, "F1", function () awful.spawn("/home/lars/Scripts/screen-select.sh 1") end,
+              {description = "select only internal Display for output", group = "Xorg"}),
+    awful.key({ modkey, "Shift"   }, "F2", function () awful.spawn("/home/lars/Scripts/screen-select.sh 2") end,
+              {description = "select only internal Display for output", group = "Xorg"}),
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey,           }, "#", function() awful.spawn("slock") end,
+              {description = "lock the screen", group = "Xorg"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
