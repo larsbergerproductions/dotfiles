@@ -1,6 +1,6 @@
 # Exports {{{
 export GITHUB_USER="larsbergerproductions"
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/home/lars/scripts:/root/.gem/ruby/2.7.0/bin:/home/lars/.local:/home/lars/.local/bin:/home/lars/.dotnet/tools # Reorder PATH so local bin is first
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/bin/vendor_perl:/home/lars/scripts:/root/.gem/ruby/2.7.0/bin:/home/lars/.local:/home/lars/.local/bin:/home/lars/.cargo/bin:/home/lars/.dotnet/tools # Reorder PATH so local bin is first
 # export GREP_OPTIONS='--color=auto'
 # export GREP_COLOR='1;32'
 # export MANPAGER="less -X" # Don’t clear the screen after quitting a manual page
@@ -259,7 +259,7 @@ function current_pwd {
 # $(prompt_char) '
 
 PROMPT='
-${PR_GREEN}$USER@$(hostname):%{$reset_color%}${PR_BOLD_YELLOW}$(current_pwd)%{$reset_color%} $(git_prompt_string)
+${PR_GREEN}$(whoami)@$(hostname):%{$reset_color%}${PR_BOLD_YELLOW}$(current_pwd)%{$reset_color%} $(git_prompt_string)
 $(prompt_char) '
 
 export SPROMPT="Correct $fg[red]%R$reset_color to $fg[green]%r$reset_color [(y)es (n)o (a)bort (e)dit]? "
