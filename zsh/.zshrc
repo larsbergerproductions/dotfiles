@@ -13,9 +13,17 @@ CORRECT_IGNORE_FILE='.*'
 # export LS_COLORS=Gxfxcxdxbxegedabagacad
 # }}}
 
+# set default umask to exclude others
+umask 027
+
+# start tmux on shell launch, but only if it doesn't run
+# this starts a new session for each shell
+[[ -z $TMUX ]] && [[ -n $DISPLAY ]] && exec tmux
+
 # Alias' {{{
 #alias v="nvim"
 alias vim='nvim'
+alias gss='git status -s'
 #alias sx='startx'
 alias disablehibernate='sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target'
 alias enablehibernate='sudo systemctl unmask sleep.target suspend.target hibernate.target hybrid-sleep.target'
@@ -28,14 +36,15 @@ alias q='exit'
 alias battery="acpi | awk '{if(match(\$0,/[0123456789]{1,3}%/,m)) print m[0]}'"
 alias ll='ls -la --group-directories-first --si --time-style=iso --color=always'
 alias l='ls -l --group-directories-first --si --time-style=iso --color=always'
+alias ls='ls --color=always'
 alias calendar='date | cut -f 7 -d \ | xargs cal -mw $1'
 alias cal='cal -mw'
 #alias wetter='curl https://wttr.in/munich'
 alias rs='redshift -l 52.31:13.24 -o'
 
-alias ns='nordvpn status'
-alias nc='nordvpn connect' #todo: this conflicts with netcat
-alias nd='nordvpn disconnect'
+alias nvs='nordvpn status'
+alias nvc='nordvpn connect' #todo: this conflicts with netcat
+alias nvd='nordvpn disconnect'
 # }}}
 
 # Auto Completion {{{
@@ -295,3 +304,4 @@ function precmd {
 #   set_running_app
 # }
 # }}}
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
